@@ -4,6 +4,7 @@ namespace Elastica\Aggregation;
 
 
 use Elastica\Param;
+use Elastica\Exception\InvalidException;
 
 abstract class AbstractAggregation extends Param
 {
@@ -57,10 +58,14 @@ abstract class AbstractAggregation extends Param
     /**
      * Add a sub-aggregation
      * @param AbstractAggregation $aggregation
+     * @throws \Elastica\Exception\InvalidException
      * @return AbstractAggregation
      */
     public function addAggregation(AbstractAggregation $aggregation)
     {
+        if(is_a($aggregation, 'Elastica\Aggregations\GlobalAggregation'))
+            throw new InvalidException('Global aggregations can only be placed as top level aggregations');
+
         $this->_aggs[$aggregation->getName()] = $aggregation->toArray();
         return $this;
     }
