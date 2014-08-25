@@ -2,7 +2,9 @@
 
 namespace Elastica;
 
+use Elastica\Exception\JSONParseException;
 use Elastica\Exception\NotFoundException;
+use Elastica\JSON;
 
 /**
  * Elastica Response object
@@ -107,6 +109,22 @@ class Response
     }
 
     /**
+     * True if response has failed shards
+     *
+     * @return bool True if response has failed shards
+     */
+    public function hasFailedShards()
+    {
+        try {
+            $shardsStatistics = $this->getShardsStatistics();
+        } catch (NotFoundException $e) {
+            return false;
+        }
+
+        return array_key_exists('failures', $shardsStatistics);
+    }
+
+    /**
      * Checks if the query returned ok
      *
      * @return bool True if ok
@@ -161,11 +179,10 @@ class Response
             if ($response === false) {
                 $this->_error = true;
             } else {
-
-                $tempResponse = json_decode($response, true);
-                // If error is returned, json_decode makes empty string of string
-                if (!empty($tempResponse)) {
-                    $response = $tempResponse;
+                try {
+                    $response = JSON::parse($response);
+                } catch (JSONParseException $e) {
+                    // leave reponse as is if parse fails
                 }
             }
 

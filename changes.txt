@@ -1,4 +1,181 @@
 CHANGES
+
+2014-08-22
+ - Fixed escaping of / character in Elastica\Util::escapeTerm(), removed usage of JSON_UNESCAPED_SLASHES in Elastica\JSON #660
+
+2014-08-06
+ - Add connection pool and connection strategy
+
+2014-07-26
+- Release v1.3.0.0
+- Prepare Elastica Release v1.3.0.0
+
+2014-07-25
+- Update to elasticsearch version 1.3.0 http://www.elasticsearch.org/downloads/1-3-0/
+
+2014-07-14
+ - Add setQuery() method to Elastica\Query\ConstantScore #653
+
+2014-07-12
+ - Be able to configure ES host/port via ENV var in test env #652
+
+2014-07-07
+ - Fix FunstionScore Query random_score without seed bug. #647
+
+2014-07-02
+- Add setPostFilter method to Elastica\Query (http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_filtering_queries_and_aggregations.html#_post_filter) #645
+
+2014-06-30
+- Add Reverse Nested aggregation (http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-reverse-nested-aggregation.html). #642
+
+2014-06-14
+- Release v1.2.1.0
+- Removed the requirement to set arguments filter and/or query in Filtered, according to the documentation: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-filtered-query.html #616
+
+2014-06-13
+- Stop ClientTest->testDeleteIdsIdxStringTypeString from failing 1/3 of the time #634
+- Stop ScanAndScrollTest->testQuerySizeOverride from failing frequently for no reason #635
+- rework Document and Script so they can share some infrastructure allowing scripts to specify things like _retry_on_conflict and _routing #629
+
+2014-06-11
+- Allow bulk API deletes to be routed #631
+
+2014-06-10
+- Update travis to elasticsearch 1.2.1, disable Thrift plugin as not compatible and fix incompatible tests
+
+2014-06-04
+- Implement Boosting Query (http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-boosting-query.html) #625
+
+2014-06-02
+- add retry_on_conflict support to bulk #623
+
+2014-06-01
+- toString updated to consider doc_as_upsert if sent an array source #622
+
+2014-05-27
+- Fix Aggragations/Filter to work with es v1.2.0 #619
+
+2014-05-25
+- Added Guzzle transport as an alternative to the default Http transport #618
+- Added Elastica\ScanAndScroll Iterator (http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/scan-scroll.html) #617
+
+2014-05-13
+- Add JSON compat library; Elasticsearch JSON flags and nicer error handling #614
+
+2014-05-12
+- Update dev builds to phpunit 4.1.*
+
+2014-05-11
+- Set processIsolation and backupGlobals to false to speed up tests. processIsolation was very slow with phpunit 4.0.19.
+
+2014-05-05
+- Fix get settings on alaised index #608
+- Added named function for source filtering #605
+- Scroll type constant to Elastica\Search added #607
+
+2014-04-28
+- Added setAnalyzer method to Query\FuzzyLikeThis Class and fixed issue with params not being merged #611
+- Typo fixes #600, #602
+- Remove unreachable return statement #598
+
+2014-04-27
+- Release v1.1.1.1
+- Fix missing use in TermsStats->setOrder() #597
+- Replace all instances of ElasticSearch with Elasticsearch #597
+
+2014-04-24
+- Fixing the Bool filter with Bool filter children bug #594
+
+2014-04-22
+- Remove useless echo in the Memcache Transport object #595
+
+2014-04-21
+- escape \ by \\ #592
+
+2014-04-20
+- Handling of HasChild type parsing bug #585
+- Consolidate Index getMapping tests #591
+- Fix Type::getMapping when using an aliased index #588
+
+2014-04-19
+- Release v1.1.1.0
+- Update to elasticsearch 1.1.1 http://www.elasticsearch.org/downloads/1-1-1/
+- Remove CustomFiltersScore and CustomScore query as removed in elasticsearch 1.1.0 https://github.com/elasticsearch/elasticsearch/pull/5076/files
+- Update Node Info to use plugins instead of plugin (https://github.com/elasticsearch/elasticsearch/pull/5072)
+- Fix mapping issue for aliases #588
+
+2014-04-17
+- Only trap real JSON parse errors in Response class #586
+
+2014-04-09
+- Added Cardinality aggregation #581
+
+2014-04-7
+- Support for Terms filter lookup options #579
+
+2014-03-29
+- Update to elasticsearch 1.1.0 http://www.elasticsearch.org/downloads/1-1-0/
+
+2014-03-26
+- Fixed Query\Match Fuzziness parameter type #576
+
+2014-03-24
+- Release v1.0.1.2
+- Added Filter\Indices #574
+
+2014-03-25
+- Allow json string as data srouce for Bulk\Action on update #575
+
+2014-03-20
+- Allow for request params in delete by query calls #573
+
+2014-03-17
+- Added filters: AbstractGeoShape, GeoShapePreIndexed, GeoShapeProvided #568
+
+2014-03-15
+- Percolate existing documents and add percolate options (#570)
+
+2014-03-14
+- Added Query\Rescore #441
+
+2014-03-13
+- Added missing query options for MultiMatch (operator, minimum_should_match, zero_terms_query, cutoff_frequency, type, fuzziness, prefix_length, max_expansions, analyzer) #569
+- Added missing query options for Match (zero_terms_query, cutoff_frequency) #569
+
+2014-03-11
+- Fixed request body reuse in http transport #567
+
+2014-03-08
+- Release v1.0.1.1
+- Enable goecluster-facet again as now compatible with elasticsearch 1.0 on travis
+- Run elasticsearch in the background to not have log output in travis build
+- Set memache php version as environment variable
+- Update to memcache 3.0.8 for travis
+
+2014-03-07
+- Add snapshot / restore functionality (Elastica\Snapshot) #566
+
+2014-03-04
+- Add PHP 5.6 to travis test environment
+- Improve performance of Elastica/Status->getIndicesWithAlias and aliasExists on clusters with many indices #563
+
+2014-03-02
+- Release v1.0.1.0
+- Fixed Type->deleteByQuery() not working with Query objects #554
+
+2014-02-27
+- Update to elasticsearch 1.0.1. Update Thrift and Geocluster plugin.
+
+2014-02-25
+- Add JSON_UNESCAPED_UNICODE and JSON_UNESCAPED_SLASHES options in Elastica/Transport/Http, Elastica/Bulk/Action #559
+
+2014-02-20
+- Fixed unregister percolator (still used _percolator instead of .percolator). removed duplicate slash from register percolator route. #558
+
+2014-02-17
+- Throw PartialShardFailureException if response has failed shards
+- Elastica/Aggregations/GlobalAggragation not allowed as sub aggragation #555
+
 2014-02-14
 - Add methods setSize, setShardSize to Elastica/Aggregation/Terms
 - Elastica/Aggregation/GlobalAggregationTest fixed bug where JSON returned [] instead of {}
